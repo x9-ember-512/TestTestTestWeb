@@ -721,13 +721,11 @@ function calculatePrediction(history) {
 function calculateAccuracyPct(history) {
   if (!history || history.length < 6) return null;
   var correct = 0, total = 0;
-  for (var i = 0; i < 4 && i + 4 < history.length; i++) {
+  var testCount = Math.min(20, history.length - 3);
+  for (var i = 0; i < testCount; i++) {
     var pred = calculatePrediction(history.slice(i + 1));
     var actual = classifyBS(history[i].number);
-    if (pred && actual) {
-      if (pred.value === actual) correct++;
-      total++;
-    }
+    if (pred && actual) { if (pred.value === actual) correct++; total++; }
   }
   if (total === 0) return null;
   return Math.round((correct / total) * 100);

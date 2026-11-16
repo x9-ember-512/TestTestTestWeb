@@ -2161,6 +2161,9 @@
       const data = snap.val() || {};
       const newPlatforms = data.platforms || {};
       const newPaidUid = data.paidUid || null;
+      // 🆕 v29: Preserve paidExpired if firebase hasn't yet been updated (transition period)
+      const newPaidExpired = (data.paidExpired !== undefined) ? data.paidExpired : (userDataCache && userDataCache.paidExpired) || null;
+      const newPaidExpiredTs = (data.paidExpiredTs !== undefined) ? data.paidExpiredTs : (userDataCache && userDataCache.paidExpiredTs) || null;
       if (!userDataCache) return;
       const oldPlatforms = userDataCache.platforms || {};
       const oldPaidUid = userDataCache.paidUid || null;
@@ -2170,10 +2173,15 @@
         if (oldUid !== newUid) { if (!oldUid && newUid) added.push(key); else if (oldUid && !newUid) removed.push(key); }
       }
       if (oldPaidUid !== newPaidUid) { if (!oldPaidUid && newPaidUid) added.push('paid'); else if (oldPaidUid && !newPaidUid) removed.push('paid'); }
-      if (added.length === 0 && removed.length === 0) return;
       userDataCache.platforms = newPlatforms;
       userDataCache.paidUid = newPaidUid;
+      userDataCache.paidExpired = newPaidExpired;
+      userDataCache.paidExpiredTs = newPaidExpiredTs;
       localStorage.setItem('webUserData', JSON.stringify(userDataCache));
+      if (added.length === 0 && removed.length === 0) {
+        if (appState.currentTab === 'profile') renderProfilePage();
+        return;
+      }
       justAddedPlatforms = added.slice();
       if (appState.currentTab === 'profile') renderProfilePage();
       if (appState.currentTab === 'prediction') renderPredictionList();
@@ -2909,6 +2917,35 @@
     const sinceText = currentLang === 'mm' ? MM_MONTHS[month] + ' ' + toMmNum(year) : EN_MONTHS[month] + ' ' + year;
     document.getElementById('memberSince').textContent = sinceText;
     renderPremiumCards(data);
+    renderPaidPremiumBanner(data);
+  }
+  // 🆕 v29: Paid Premium banner (Active/Expired with expiry time)
+  function renderPaidPremiumBanner(data) {
+    const container = document.getElementById('premiumListContainer');
+    if (!container) return;
+    const existing = document.getElementById('paidPremiumBanner');
+    if (existing) existing.remove();
+    if (!data.paidUid && !data.paidExpired) return;
+    const isExpired = !data.paidUid || (data.paidExpiredTs && Date.now() > Number(data.paidExpiredTs));
+    const banner = document.createElement('div');
+    banner.id = 'paidPremiumBanner';
+    const bgGrad = isExpired
+      ? 'linear-gradient(135deg, rgba(239,68,68,0.10), rgba(220,38,38,0.08))'
+      : 'linear-gradient(135deg, rgba(168,85,247,0.12), rgba(236,72,153,0.08))';
+    const borderColor = isExpired ? 'rgba(239,68,68,0.3)' : 'rgba(168,85,247,0.3)';
+    const iconBg = isExpired ? 'rgba(239,68,68,0.15)' : 'rgba(168,85,247,0.15)';
+    const iconColor = isExpired ? '#dc2626' : '#a855f7';
+    const statusText = isExpired ? 'Paid Premium • Expired ❌' : 'Paid Premium • Active ✅';
+    banner.style.cssText = 'grid-column: 1 / -1; padding: 14px 16px; border-radius: 16px; margin-bottom: 4px; display: flex; align-items: center; gap: 12px; background: ' + bgGrad + '; border: 1.5px solid ' + borderColor + ';';
+    let html = '<div style="width: 40px; height: 40px; border-radius: 12px; background: ' + iconBg + '; color: ' + iconColor + '; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0;"><i class="fa-solid fa-crown"></i></div>';
+    html += '<div style="flex: 1; min-width: 0;">';
+    html += '<div style="font-size: 0.8125rem; font-weight: 800; color: ' + iconColor + '; margin-bottom: 2px;">' + statusText + '</div>';
+    if (data.paidExpired) {
+      html += '<div style="font-size: 0.6875rem; color: var(--text-muted); font-weight: 600;">⏱ Expired - ' + escapeHtml(data.paidExpired) + '</div>';
+    }
+    html += '</div>';
+    banner.innerHTML = html;
+    container.insertBefore(banner, container.firstChild);
   }
   function renderPremiumCards(data) {
     const container = document.getElementById('premiumListContainer');
@@ -2920,18 +2957,36 @@
       { key: 'sixwin', name_en: 'SixWin Premium', name_mm: 'SixWin ပရီမီယံ', icon: 'Logo/sixwin_logo.jpg', activeColor: '#dc2626' },
       { key: 'shwe', name_en: 'Shwe Premium', name_mm: 'Shwe ပရီမီယံ', icon: 'Logo/shwe_logo.jpg', activeColor: '#ea580c' }
     ];
+    // 🆕 v29: 3-State logic — Active (UID) / Active No SetUp (Paid) / Inactive
+    const hasPaidActive = !!data.paidUid && !(data.paidExpiredTs && Date.now() > Number(data.paidExpiredTs));
     let activeCount = 0;
     platforms.forEach((p, i) => {
       const uid = data.platforms ? data.platforms[p.key] : null;
       const isActive = !!uid;
+      const isNoSetup = !uid && hasPaidActive;
       if (isActive) activeCount++;
       const name = currentLang === 'mm' ? p.name_mm : p.name_en;
       const joinText = currentLang === 'mm' ? 'ချိတ်ဆက်ရန် →' : 'Tap to Join →';
       const card = document.createElement('div');
       const wasJustAdded = justAddedPlatforms.includes(p.key);
-      card.className = `premium-card ${isActive ? 'active' : 'inactive'}${wasJustAdded ? ' just-added' : ''}`;
+      const stateClass = (isActive || isNoSetup) ? 'active' : 'inactive';
+      card.className = `premium-card ${stateClass}${wasJustAdded ? ' just-added' : ''}`;
       card.style.animationDelay = wasJustAdded ? '0ms' : `${i * 50 + 200}ms`;
-      card.innerHTML = `<div class="premium-card-top"><div class="premium-icon"><img src="${p.icon}" alt=""></div><div class="premium-status-icon">${isActive ? '<i class="fa-solid fa-check"></i>' : '<i class="fa-solid fa-chevron-right"></i>'}</div></div><div class="premium-title" style="color: ${isActive ? p.activeColor : 'var(--text-muted)'}">${escapeHtml(name)}</div><div class="premium-uid">${isActive ? 'UID: ' + escapeHtml(uid) : joinText}</div>`;
+      let statusIcon, uidText, titleColor;
+      if (isActive) {
+        statusIcon = '<i class="fa-solid fa-check"></i>';
+        uidText = 'UID: ' + escapeHtml(uid);
+        titleColor = p.activeColor;
+      } else if (isNoSetup) {
+        statusIcon = '<i class="fa-solid fa-gear"></i>';
+        uidText = '<span style="color:#d97706;font-weight:800;">No SetUp</span>';
+        titleColor = p.activeColor;
+      } else {
+        statusIcon = '<i class="fa-solid fa-chevron-right"></i>';
+        uidText = joinText;
+        titleColor = 'var(--text-muted)';
+      }
+      card.innerHTML = `<div class="premium-card-top"><div class="premium-icon"><img src="${p.icon}" alt=""></div><div class="premium-status-icon">${statusIcon}</div></div><div class="premium-title" style="color: ${titleColor}">${escapeHtml(name)}</div><div class="premium-uid">${uidText}</div>`;
       card.onclick = () => {
         if (isActive) { copyToClipboard(uid); card.style.transform = 'scale(0.95)'; setTimeout(() => card.style.transform = '', 150); }
         else window.open('https://t.me/SuperEaringWebbb_Bot', '_blank');
@@ -3075,8 +3130,10 @@
         if (data.status === 'success') {
           cleanupVerify(); loginBusy = false; btn.disabled = false; btn.textContent = T[currentLang].sign_in;
           const chatId = data.chatId; const platforms = data.platforms || {};
+          const paidExpired = data.paidExpired || null;
+          const paidExpiredTs = data.paidExpiredTs || null;
           try { snap.ref.remove(); } catch (e) {}
-          showLoginSuccess(chatId, platforms);
+          showLoginSuccess(chatId, platforms, paidExpired, paidExpiredTs);
         } else if (data.status === 'error') {
           cleanupVerify();
           showError('otpError', data.message || 'Invalid Code.');
@@ -3095,7 +3152,7 @@
       showError('otpError', 'Error: ' + (e.message || 'unknown'));
     }
   }
-  async function showLoginSuccess(chatId, platforms) {
+  async function showLoginSuccess(chatId, platforms, paidExpired, paidExpiredTs) {
     const overlay = document.getElementById('loginSuccessOverlay');
     document.getElementById('loginSuccessId').textContent = 'ID: ' + chatId;
     overlay.classList.add('show');
@@ -3104,7 +3161,7 @@
     setTimeout(() => {
       overlay.classList.remove('show');
       setTimeout(() => {
-        const userData = { chatId, platforms: platforms || {}, paidUid: platforms?.paid || null, loginTime: Date.now() };
+        const userData = { chatId, platforms: platforms || {}, paidUid: platforms?.paid || null, paidExpired: paidExpired || null, paidExpiredTs: paidExpiredTs || null, loginTime: Date.now() };
         localStorage.setItem('webUserData', JSON.stringify(userData));
         sessionStorage.removeItem('guestMode');
         userDataCache = userData;
@@ -3778,7 +3835,19 @@
     }
     return false;
   }
-  
+
+  // 🆕 v29: Backup refresh on tab focus/visibility (in case listener temporarily lost)
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible' && appState.mode === 'user' && userDataCache && userDataCache.chatId) {
+      if (appState.currentTab === 'profile') renderProfilePage();
+    }
+  });
+  window.addEventListener('focus', () => {
+    if (appState.mode === 'user' && userDataCache && userDataCache.chatId) {
+      if (appState.currentTab === 'profile') renderProfilePage();
+    }
+  });
+
   </script>
   </body>
   </html>
