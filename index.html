@@ -769,7 +769,7 @@
   .profile-action-btn.logout { background: linear-gradient(135deg, #f87171, #dc2626); color: #ffffff; box-shadow: 0 4px 14px rgba(220, 38, 38, 0.28); }
   .profile-action-btn.logout i { color: #ffffff; }
 
-  /* ============ PROFILE LINK BUTTONS (Premium Clean Design) ============ */
+  /* ============ PROFILE LINK BUTTONS ============ */
   .profile-link-btn {
     display: flex; align-items: center; gap: 14px;
     width: 100%; padding: 14px 16px;
@@ -962,7 +962,7 @@
   .flag-mm { background: linear-gradient(to bottom, #fecb00 33.33%, #34b233 33.33%, #34b233 66.66%, #ea2839 66.66%); }
   .flag-mm::before { content: "★"; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-size: 8px; line-height: 1; }
 
-  /* ============ SHEET LIST ITEM (Clean - No Subtitle) ============ */
+  /* ============ SHEET LIST ITEM ============ */
   .sheet-list { display: flex; flex-direction: column; gap: 8px; }
   .sheet-list-item {
     display: flex; align-items: center; gap: 14px;
@@ -1022,12 +1022,6 @@
   .tool-card-body { flex: 1; min-width: 0; }
   .tool-card-title { font-size: 0.9375rem; font-weight: 800; color: var(--text); line-height: 1.3; }
   .tool-card-arrow { color: var(--text-subtle); font-size: 13px; flex-shrink: 0; }
-  .tool-card-icon.tool-card-icon--logo {
-    padding: 0 !important; overflow: hidden;
-    background: var(--bg-card) !important;
-    border: 1px solid var(--border);
-  }
-  .tool-card-icon.tool-card-icon--logo img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: inherit; }
 
   .record-badge {
     display: inline-flex; align-items: center; gap: 5px;
@@ -1206,7 +1200,7 @@
   @keyframes slideDownFade { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-  /* ============ PREDICTION LIST ============ */
+  /* ============ PREDICTION ============ */
   #screen-prediction { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px) + 20px); }
   .prediction-section-title {
     font-size: 0.75rem; font-weight: 800; letter-spacing: 0.06em;
@@ -1252,7 +1246,6 @@
   body.dark .prediction-status-icon.locked { background: rgba(148, 163, 184, 0.15); color: var(--text-muted); }
   .prediction-arrow { color: var(--text-subtle); font-size: 11px; flex-shrink: 0; }
 
-  /* ============ PREDICTION DETAIL ============ */
   .pred-game-tabs {
     display: flex; gap: 4px; padding: 4px;
     background: var(--bg-card); border: 1px solid var(--border);
@@ -1287,100 +1280,44 @@
   }
   .pred-version-row-h { display: flex; flex-direction: column; gap: 8px; }
 
-  /* ============ Version Button — Type Distinction ============ */
   .pred-version-btn {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    width: 100%;
-    min-height: 56px;
-    padding: 0 14px 0 14px;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    background: var(--bg-card);
-    color: var(--text);
-    font-family: inherit;
-    cursor: pointer;
+    display: flex; align-items: center; gap: 10px;
+    width: 100%; min-height: 56px; padding: 0 14px;
+    border: 1px solid var(--border); border-radius: 12px;
+    background: var(--bg-card); color: var(--text);
+    font-family: inherit; cursor: pointer;
     transition: transform 0.15s var(--spring), border-color 0.2s, background 0.2s;
-    position: relative;
-    overflow: hidden;
+    position: relative; overflow: hidden;
     box-shadow: 0 1px 2px rgba(0,0,0,0.02);
   }
   .pred-version-btn:active { transform: scale(0.98); background: var(--bg-page); }
-
-  /* Left Bar - 4px */
   .pred-version-btn::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; bottom: 0;
-    width: 4px;
+    content: ''; position: absolute;
+    top: 0; left: 0; bottom: 0; width: 4px;
   }
-  .pred-version-btn.special::before {
-    background: linear-gradient(180deg, #f59e0b, #d97706);
-  }
-  .pred-version-btn.special.is-locked-premium::before {
-    background: linear-gradient(180deg, #f59e0b, #d97706);
-    opacity: 0.5;
-  }
-  .pred-version-btn.free::before {
-    background: linear-gradient(180deg, #22c55e, #16a34a);
-  }
-  .pred-version-btn.is-placeholder::before {
-    background: var(--border);
-  }
+  .pred-version-btn.special::before { background: linear-gradient(180deg, #f59e0b, #d97706); }
+  .pred-version-btn.special.is-locked-premium::before { background: linear-gradient(180deg, #f59e0b, #d97706); opacity: 0.5; }
+  .pred-version-btn.free::before { background: linear-gradient(180deg, #22c55e, #16a34a); }
+  .pred-version-btn.is-placeholder::before { background: var(--border); }
 
-  /* Type Icon */
   .pred-version-btn .ver-icon {
     width: 26px; height: 26px; border-radius: 7px;
     display: flex; align-items: center; justify-content: center;
     font-size: 11px; flex-shrink: 0;
   }
-  .pred-version-btn.special .ver-icon {
-    background: rgba(245, 158, 11, 0.14);
-    color: #b45309;
-  }
-  body.dark .pred-version-btn.special .ver-icon {
-    background: rgba(251, 191, 36, 0.18);
-    color: #fbbf24;
-  }
-  .pred-version-btn.special.is-locked-premium .ver-icon {
-    background: rgba(100, 116, 139, 0.1);
-    color: var(--text-muted);
-  }
-  .pred-version-btn.free .ver-icon {
-    background: rgba(34, 197, 94, 0.14);
-    color: #15803d;
-  }
-  body.dark .pred-version-btn.free .ver-icon {
-    background: rgba(52, 211, 153, 0.18);
-    color: #86efac;
-  }
-  .pred-version-btn.is-placeholder .ver-icon {
-    background: rgba(100, 116, 139, 0.08);
-    color: var(--text-subtle);
-  }
+  .pred-version-btn.special .ver-icon { background: rgba(245, 158, 11, 0.14); color: #b45309; }
+  body.dark .pred-version-btn.special .ver-icon { background: rgba(251, 191, 36, 0.18); color: #fbbf24; }
+  .pred-version-btn.special.is-locked-premium .ver-icon { background: rgba(100, 116, 139, 0.1); color: var(--text-muted); }
+  .pred-version-btn.free .ver-icon { background: rgba(34, 197, 94, 0.14); color: #15803d; }
+  body.dark .pred-version-btn.free .ver-icon { background: rgba(52, 211, 153, 0.18); color: #86efac; }
+  .pred-version-btn.is-placeholder .ver-icon { background: rgba(100, 116, 139, 0.08); color: var(--text-subtle); }
 
-  /* Version Number */
-  .pred-version-btn .ver-num {
-    font-size: 0.9375rem;
-    font-weight: 800;
-    color: var(--text);
-    letter-spacing: -0.01em;
-    flex-shrink: 0;
-  }
-
-  /* Win Rate Badge */
+  .pred-version-btn .ver-num { font-size: 0.9375rem; font-weight: 800; color: var(--text); letter-spacing: -0.01em; flex-shrink: 0; }
   .pred-version-btn .ver-winrate {
-    margin-left: auto;
-    font-size: 0.6875rem;
-    font-weight: 800;
-    padding: 4px 10px;
-    border-radius: 6px;
-    letter-spacing: 0.01em;
-    flex-shrink: 0;
-    font-variant-numeric: tabular-nums;
-    white-space: nowrap;
-    transition: background 0.2s, color 0.2s;
+    margin-left: auto; font-size: 0.6875rem; font-weight: 800;
+    padding: 4px 10px; border-radius: 6px; letter-spacing: 0.01em;
+    flex-shrink: 0; font-variant-numeric: tabular-nums;
+    white-space: nowrap; transition: background 0.2s, color 0.2s;
   }
   .ver-winrate.high { background: rgba(34, 197, 94, 0.12); color: #15803d; }
   .ver-winrate.medium { background: rgba(245, 158, 11, 0.14); color: #b45309; }
@@ -1393,25 +1330,19 @@
   body.dark .ver-winrate.loading { background: var(--bg-page); color: var(--text-subtle); }
   body.dark .ver-winrate.fixing { background: rgba(148, 163, 184, 0.12); color: var(--text-muted); }
 
-  /* Arrow */
-  .pred-version-btn .ver-arrow {
-    color: var(--text-subtle);
-    font-size: 11px;
-    flex-shrink: 0;
-    transition: transform 0.2s;
-  }
+  .pred-version-btn .ver-arrow { color: var(--text-subtle); font-size: 11px; flex-shrink: 0; transition: transform 0.2s; }
   .pred-version-btn:active .ver-arrow { transform: translateX(2px); }
+  .pred-version-btn.is-placeholder { border-style: dashed; opacity: 0.85; }
 
-  /* Placeholder (Fix) */
-  .pred-version-btn.is-placeholder {
-    border-style: dashed;
-    opacity: 0.85;
+  /* 🆕 v31: Paid Premium dot pulse animation */
+  @keyframes paidDotPulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.15); }
   }
 </style>
 </head>
 <body>
 
-  <!-- FIXING BANNER -->
   <div id="fixingBanner" class="fixing-banner">
     <div class="fixing-banner-inner">
       <i class="fa-solid fa-wrench fixing-banner-icon"></i>
@@ -1419,12 +1350,10 @@
     </div>
   </div>
   
-  <!-- INTRO SPLASH -->
   <div id="introSplash">
     <div class="intro-logo"><span class="red">SuperSel</span> <span class="black">Earing</span></div>
   </div>
   
-  <!-- HEADER -->
   <header class="app-header">
     <div class="header-left">
       <div class="header-brand" id="headerBrand"><span class="red">SuperSel</span> <span class="black">Earing</span></div>
@@ -1433,7 +1362,6 @@
     <div class="header-right" id="headerRight"></div>
   </header>
   
-  <!-- LOGIN SCREEN -->
   <div id="loginScreen" class="login-screen">
     <div class="login-container" id="loginContainer">
       <div class="login-header stagger-1">
@@ -1470,10 +1398,7 @@
     </div>
   </div>
   
-  <!-- MAIN APP -->
   <div id="mainApp" class="main-app">
-  
-    <!-- HOME -->
     <div id="screen-home" class="screen active">
       <div class="screen-inner">
         <div class="brand-list">
@@ -1513,7 +1438,6 @@
       </div>
     </div>
   
-    <!-- PREDICTION -->
     <div id="screen-prediction" class="screen">
       <div class="screen-inner">
         <div class="prediction-section-title" data-t="premium_platform">Premium Platforms</div>
@@ -1521,14 +1445,12 @@
       </div>
     </div>
   
-    <!-- CHATS -->
     <div id="screen-chats" class="screen">
       <div class="screen-inner">
         <div class="tools-list" id="historyChatsList"></div>
       </div>
     </div>
   
-    <!-- TOOLS -->
     <div id="screen-tools" class="screen">
       <div class="screen-inner">
         <div class="tools-list">
@@ -1541,7 +1463,6 @@
       </div>
     </div>
   
-    <!-- PROFILE -->
     <div id="screen-profile" class="screen">
       <div class="screen-inner">
         <div id="profileGuestView" style="display: none;">
@@ -1615,22 +1536,17 @@
     </div>
   </div>
   
-  <!-- SUB-SCREEN -->
   <div id="subScreen" class="sub-screen"><div class="sub-screen-body" id="subBody"></div></div>
   
-  <!-- EXTENSION WEBSITE OVERLAY -->
   <div id="extensionWebsiteOverlay" class="extension-website-overlay"></div>
   
-  <!-- EXTENSION FAB -->
   <div class="extension-fab-wrap" id="extensionFabWrap">
     <div class="extension-fab-list" id="extensionFabList"></div>
     <button class="extension-fab" id="extensionFab" onclick="toggleExtensionFab()"></button>
   </div>
   
-  <!-- FLOATING BACK -->
   <button class="floating-back-btn" id="floatingBackBtn" onclick="goBack()" aria-label="Back"><i class="fa-solid fa-arrow-left"></i></button>
   
-  <!-- BOTTOM NAV -->
   <nav class="bottom-nav hidden" id="bottomNav">
     <button class="nav-item active" data-tab="home" onclick="switchTab('home')"><i class="fa-solid fa-house"></i><span class="nav-label" data-t="nav_home">Home</span></button>
     <button class="nav-item" data-tab="prediction" onclick="switchTab('prediction')"><i class="fa-solid fa-chart-line"></i><span class="nav-label" data-t="nav_prediction">Prediction</span></button>
@@ -1639,7 +1555,6 @@
     <button class="nav-item" data-tab="profile" onclick="switchTab('profile')"><i class="fa-solid fa-user"></i><span class="nav-label" data-t="nav_profile">Profile</span></button>
   </nav>
   
-  <!-- PHOTO MODAL -->
   <div class="modal-overlay" id="photoModal" onclick="closeModal(event)">
     <div class="modal-content">
       <button class="modal-close" onclick="closeModal(event)"><i class="fa-solid fa-xmark"></i></button>
@@ -1647,7 +1562,6 @@
     </div>
   </div>
   
-  <!-- LOGOUT CONFIRM -->
   <div class="modal-overlay" id="logoutConfirmModal" onclick="if(event.target===this) closeLogoutConfirm()">
     <div class="logout-confirm-dialog">
       <div class="logout-confirm-icon"><i class="fa-solid fa-right-from-bracket"></i></div>
@@ -1660,7 +1574,6 @@
     </div>
   </div>
   
-  <!-- LANGUAGE SHEET -->
   <div class="sheet-overlay" id="sheetOverlay" onclick="closeLangSheet()"></div>
   <div class="bottom-sheet" id="langSheet">
     <div class="sheet-header"><div class="sheet-title" data-t="select_lang">Select Language</div><button class="sheet-close" onclick="closeLangSheet()"><i class="fa-solid fa-xmark"></i></button></div>
@@ -1668,7 +1581,6 @@
     <div class="lang-option" id="opt-en" onclick="setLanguage('en')"><div class="lang-left"><div class="flag flag-us"></div><span>English (USA)</span></div><i class="fa-solid fa-check lang-check"></i></div>
   </div>
   
-  <!-- TELEGRAM SHEET (No 4) — Clean, no subtitle -->
   <div class="sheet-overlay" id="tgOverlay" onclick="closeTelegramSheet()"></div>
   <div class="bottom-sheet" id="tgSheet">
     <div class="sheet-header">
@@ -1704,7 +1616,6 @@
     </div>
   </div>
   
-  <!-- AUTO BOT SHEET (No 5) — Clean, no subtitle -->
   <div class="sheet-overlay" id="botOverlay" onclick="closeBotSheet()"></div>
   <div class="bottom-sheet" id="botSheet">
     <div class="sheet-header">
@@ -1735,7 +1646,6 @@
     </div>
   </div>
   
-  <!-- LOGIN SUCCESS -->
   <div id="loginSuccessOverlay" class="login-success-overlay">
     <div class="login-success-content">
       <div class="login-success-circle"><svg class="checkmark" viewBox="0 0 52 52"><circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/><path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg></div>
@@ -1744,7 +1654,6 @@
     </div>
   </div>
   
-  <!-- FORCE LOGOUT -->
   <div id="forceLogoutOverlay" class="force-logout-overlay">
     <div class="force-logout-content">
       <div class="force-logout-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
@@ -1754,7 +1663,6 @@
     </div>
   </div>
   
-  <!-- TOAST -->
   <div class="toast-container" id="toastContainer"></div>
   
   <script>
@@ -1842,10 +1750,10 @@
       win_rate_fmt: 'နိုင် {p}%', fixing: 'ပြင်နေသည်...'
     }
   };
-  
+
   const MM_MONTHS = ['ဇန်နဝါရီ', 'ဖေဖော်ဝါရီ', 'မတ်', 'ဧပြီ', 'မေ', 'ဇွန်', 'ဇူလိုင်', 'ဩဂုတ်', 'စက်တင်ဘာ', 'အောက်တိုဘာ', 'နိုဝင်ဘာ', 'ဒီဇင်ဘာ'];
   const EN_MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  
+
   // ============ BRANDS & CONFIG ============
   const BRANDS = {
     ck:     { name: 'Ck Lottery', logo: 'Logo/ck_logo.jpg', c1: '#818cf8', c2: '#4f46e5' },
@@ -1888,7 +1796,7 @@
     { id: 'shwe30', brand: 'shwe', title_en: 'Shwe WinGo 30 History', title_mm: 'Shwe WinGo 30 မှတ်တမ်း', logo: 'Logo/shwe_logo.jpg', src: 'History%20Chat/Shwe%20WinGo%2030/shwe30results.html', firebase: Object.assign({}, FIREBASE_PROJECT, { path: "shwewingo30/default" }) },
     { id: 'shwe1', brand: 'shwe', title_en: 'Shwe WinGo 1 History', title_mm: 'Shwe WinGo 1 မှတ်တမ်း', logo: 'Logo/shwe_logo.jpg', src: 'History%20Chat/Shwe%20WinGo%201/shwe1results.html', firebase: Object.assign({}, FIREBASE_PROJECT, { path: "shwewingo1/default" }) }
   ];
-  
+
   // ============ CONTENT ============
   const CONTENT = {
     ck: {
@@ -1998,7 +1906,7 @@
       ]}
     }
   };
-  
+
   // ============ APP STATE ============
   const appState = { mode: 'login', currentTab: 'home', previousTab: 'home', cameFromGuest: false };
   let currentLang = localStorage.getItem('appLang') || 'en';
@@ -2025,7 +1933,6 @@
   let premiumRef = null, premiumHandler = null, justAddedPlatforms = [];
   let fixingBannerTimer = null;
   
-  // Win rate cache
   const winRateCache = {};
   const WIN_RATE_CACHE_DURATION = 30000;
   const WIN_RATE_APP_PREFIX = 'wrApp_';
@@ -2038,7 +1945,21 @@
     try { app = firebase.app('loginBridge'); } catch (e) { app = firebase.initializeApp(BRIDGE_CONFIG, 'loginBridge'); }
     loginBridgeDb = app.database();
   } catch (e) { console.error('Bridge init error:', e); }
-  
+
+  // ============ 🆕 v31: PAID ACTIVE HELPER ============
+  function isPaidActiveFromData(data) {
+    if (!data) return false;
+    if (data.paidActive !== undefined && data.paidActive !== null) {
+      if (data.paidActive === false && data.paidExpiredTs && Date.now() < Number(data.paidExpiredTs)) {
+        console.warn('[Paid] paidActive=false but expTs is future → fallback ACTIVE');
+        return true;
+      }
+      return data.paidActive === true;
+    }
+    if (!data.paidExpiredTs) return !!data.paidUid;
+    return Date.now() < Number(data.paidExpiredTs);
+  }
+
   // ============ FIXING BANNER ============
   function showFixingBanner() {
     const banner = document.getElementById('fixingBanner');
@@ -2150,15 +2071,10 @@
     document.getElementById('botSheet').classList.remove('active');
     document.getElementById('botOverlay').classList.remove('active');
   }
-  
+
   // ============ PREMIUM ============
   function getPlatformName(key) { return PLATFORM_NAMES[key] || key; }
-  // 🆕 v30: Central helper — paidActive (Bot) is authoritative; timestamp fallback for old data
-  function isPaidActiveFromData(data) {
-    if (!data) return false;
-    if (data.paidActive !== undefined && data.paidActive !== null) return data.paidActive === true;
-    return !!data.paidUid && !(data.paidExpiredTs && Date.now() > Number(data.paidExpiredTs));
-  }
+  
   function startPremiumListener(chatId) {
     stopPremiumListener();
     if (!loginBridgeDb) return;
@@ -2205,7 +2121,7 @@
     if (!loginBridgeDb) return;
     try { await loginBridgeDb.ref('user_premium/' + chatId).update({ platforms: platforms || {}, paidUid: paidUid || null, updatedAt: Date.now() }); } catch (e) {}
   }
-  
+
   // ============ INIT ============
   document.addEventListener('DOMContentLoaded', async () => {
     const savedTheme = localStorage.getItem('appTheme');
@@ -2240,7 +2156,7 @@
       setTimeout(() => { intro.style.display = 'none'; }, 750);
     }, 3200);
   });
-  
+
   // ============ APP MODE ============
   function showLoginScreen() {
     document.getElementById('loginScreen').classList.add('active');
@@ -2292,7 +2208,7 @@
       showMainApp(); updateHeader(); switchTab(appState.previousTab || 'home');
     }
   }
-  
+
   // ============ EXTENSION ============
   function getExtensionStorageKey() {
     if (appState.mode === 'user') { const data = JSON.parse(localStorage.getItem('webUserData') || 'null'); return data ? `extensionState_${data.chatId}` : 'extensionState_guest'; }
@@ -2358,7 +2274,7 @@
   }
   function hideExtensionForSubscreen() { document.getElementById('extensionFabWrap').style.visibility = 'hidden'; document.getElementById('extensionWebsiteOverlay').style.visibility = 'hidden'; }
   function showExtensionAfterSubscreen() { document.getElementById('extensionFabWrap').style.visibility = ''; document.getElementById('extensionWebsiteOverlay').style.visibility = ''; }
-  
+
   // ============ IFRAME LOADING ============
   function createIframeLoading(logo, text) {
     const el = document.createElement('div');
@@ -2371,7 +2287,7 @@
     loadingEl.classList.add('hide');
     setTimeout(() => { if (loadingEl.parentNode) loadingEl.remove(); }, 400);
   }
-  
+
   // ============ RECORD COUNT ============
   function fetchRecordCount(chat, force) {
     if (!chat.firebase) { recordCounts[chat.id] = { state: 'error', count: null }; renderHistoryChats(); return Promise.resolve(); }
@@ -2404,7 +2320,7 @@
     });
     return fetchInFlight[chat.id];
   }
-  
+
   // ============ THEME ============
   function applyTheme(theme, animate) {
     if (animate) { document.body.classList.add('theme-switching'); setTimeout(() => document.body.classList.remove('theme-switching'), 400); }
@@ -2424,12 +2340,12 @@
   function pushStateToIframe(iframe) {
     try { if (!iframe.contentWindow) return; const theme = document.body.classList.contains('dark') ? 'dark' : 'light'; iframe.contentWindow.postMessage({ type: 'app-sync', theme, language: currentLang }, '*'); } catch (e) {}
   }
-  
+
   // ============ MYANMAR NUMBERS ============
   const MM_DIGITS = ['၀','၁','၂','၃','၄','၅','၆','၇','၈','၉'];
   function toMmNum(str) { return String(str).replace(/[0-9]/g, d => MM_DIGITS[+d]); }
   function formatNum(n) { const s = Number(n).toLocaleString('en-US'); return currentLang === 'mm' ? toMmNum(s) : s; }
-  
+
   // ============ LANGUAGE ============
   function applyLanguage(lang) {
     currentLang = lang;
@@ -2466,15 +2382,15 @@
   function setLanguage(lang) { if (lang === currentLang) { closeLangSheet(); return; } applyLanguage(lang); closeLangSheet(); }
   function openLangSheet() { document.getElementById('sheetOverlay').classList.add('active'); document.getElementById('langSheet').classList.add('active'); }
   function closeLangSheet() { document.getElementById('sheetOverlay').classList.remove('active'); document.getElementById('langSheet').classList.remove('active'); }
-  
+
   // ============ TELEGRAM SHEET ============
   function openTelegramSheet() { document.getElementById('tgOverlay').classList.add('active'); document.getElementById('tgSheet').classList.add('active'); }
   function closeTelegramSheet() { document.getElementById('tgOverlay').classList.remove('active'); document.getElementById('tgSheet').classList.remove('active'); }
-  
+
   // ============ AUTO BOT SHEET ============
   function openBotSheet() { document.getElementById('botOverlay').classList.add('active'); document.getElementById('botSheet').classList.add('active'); }
   function closeBotSheet() { document.getElementById('botOverlay').classList.remove('active'); document.getElementById('botSheet').classList.remove('active'); }
-  
+
   // ============ HISTORY CHATS ============
   function renderHistoryChats() {
     const list = document.getElementById('historyChatsList');
@@ -2545,7 +2461,7 @@
     }
   }
   function escapeHtml(str) { return String(str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
-  
+
   // ============ OPEN HISTORY ============
   function openHistoryChat(chatId) {
     const chat = HISTORY_CHATS.find(c => c.id === chatId);
@@ -2571,7 +2487,7 @@
     try { history.pushState({ historyChat: true }, ''); } catch (e) {}
     setTimeout(() => hideIframeLoading(loadingEl), 8000);
   }
-  
+
   // ============ SUB PAGE ============
   function openSub(brandKey, actionKey) {
     currentSub = { brand: brandKey, action: actionKey };
@@ -2629,7 +2545,7 @@
     body.innerHTML = html;
     if (!isSilentRender) body.scrollTop = 0;
   }
-  
+
   // ============ SETTINGS PAGE ============
   function renderSettingsPage(isSilentRender) {
     const body = document.getElementById('subBody');
@@ -2652,8 +2568,8 @@
     const checked = extensionState[key] ? 'checked' : '';
     return '<div class="settings-row"><div class="settings-row-logo"><img src="' + cfg.logo + '" alt=""></div><div class="settings-row-content"><div class="settings-row-title">' + cfg.name + '</div></div><label class="switch"><input type="checkbox" ' + checked + ' onchange="toggleExtensionSetting(\'' + key + '\', this.checked)"><span class="switch-slider"></span></label></div>';
   }
-  
-  // ============ BET SIZE (compact - unchanged core logic) ============
+
+  // ============ BET SIZE ============
   const betSizeState = { profitMult: 1, betCount: 6, openPicker: null, lastResult: null, copyTimer: null, calcTimer: null, inputValue: '' };
   function escapeHtmlAttr(str) { return String(str || '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
   function renderBetSizePage(isSilentRender) {
@@ -2817,7 +2733,7 @@
       if (calcBtn) calcBtn.disabled = false;
     }, 650);
   }
-  
+
   // ============ CLOSE SUB ============
   function closeSub() {
     closeBetSizePickers();
@@ -2842,7 +2758,7 @@
     if (currentSub && currentSub.brand === 'prediction' && predictionGoBack()) return;
     if (currentSub) closeSub();
   }
-  
+
   // ============ HARDWARE BACK ============
   window.addEventListener('popstate', () => {
     if (forceLogoutInProgress) return;
@@ -2854,7 +2770,7 @@
     if (currentSub) { if (currentSub.brand === 'prediction' && predictionGoBack()) return; closeSub(); return; }
     if (appState.mode === 'login' && appState.cameFromGuest) { closeLogin(); return; }
   });
-  
+
   // ============ TAB SWITCH ============
   function switchTab(tab) {
     if (currentSub) closeSub();
@@ -2870,7 +2786,7 @@
     if (tab === 'prediction') renderPredictionList();
     if (tab === 'chats') HISTORY_CHATS.forEach(chat => fetchRecordCount(chat, false));
   }
-  
+
   // ============ MODAL / ESC ============
   function openModal(imgSrc, text) { document.getElementById('modalImg').src = imgSrc; document.getElementById('modalText').innerHTML = text; document.getElementById('photoModal').classList.add('active'); }
   function closeModal(e) { if (e && e.target !== e.currentTarget && !e.target.closest('.modal-close')) return; document.getElementById('photoModal').classList.remove('active'); }
@@ -2885,11 +2801,11 @@
       else if (currentSub) closeSub();
     }
   });
-  
+
   // ============ GLOBAL PROTECTION ============
   document.addEventListener('contextmenu', (e) => { if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') e.preventDefault(); }, { passive: false });
   document.addEventListener('dragstart', (e) => { if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') e.preventDefault(); }, { passive: false });
-  
+
   // ============ PROFILE ============
   function renderProfilePage() {
     if (appState.mode === 'user') {
@@ -2926,34 +2842,6 @@
     renderPremiumCards(data);
     renderPaidPremiumBanner(data);
   }
-  // 🆕 v29: Paid Premium banner (Active/Expired with expiry time)
-  function renderPaidPremiumBanner(data) {
-    const container = document.getElementById('premiumListContainer');
-    if (!container) return;
-    const existing = document.getElementById('paidPremiumBanner');
-    if (existing) existing.remove();
-    if (!data.paidUid && !data.paidExpired && data.paidActive !== true) return;
-    const isExpired = !isPaidActiveFromData(data);
-    const banner = document.createElement('div');
-    banner.id = 'paidPremiumBanner';
-    const bgGrad = isExpired
-      ? 'linear-gradient(135deg, rgba(239,68,68,0.10), rgba(220,38,38,0.08))'
-      : 'linear-gradient(135deg, rgba(168,85,247,0.12), rgba(236,72,153,0.08))';
-    const borderColor = isExpired ? 'rgba(239,68,68,0.3)' : 'rgba(168,85,247,0.3)';
-    const iconBg = isExpired ? 'rgba(239,68,68,0.15)' : 'rgba(168,85,247,0.15)';
-    const iconColor = isExpired ? '#dc2626' : '#a855f7';
-    const statusText = isExpired ? 'Paid Premium • Expired ❌' : 'Paid Premium • Active ✅';
-    banner.style.cssText = 'grid-column: 1 / -1; padding: 14px 16px; border-radius: 16px; margin-bottom: 4px; display: flex; align-items: center; gap: 12px; background: ' + bgGrad + '; border: 1.5px solid ' + borderColor + ';';
-    let html = '<div style="width: 40px; height: 40px; border-radius: 12px; background: ' + iconBg + '; color: ' + iconColor + '; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0;"><i class="fa-solid fa-crown"></i></div>';
-    html += '<div style="flex: 1; min-width: 0;">';
-    html += '<div style="font-size: 0.8125rem; font-weight: 800; color: ' + iconColor + '; margin-bottom: 2px;">' + statusText + '</div>';
-    if (data.paidExpired) {
-      html += '<div style="font-size: 0.6875rem; color: var(--text-muted); font-weight: 600;">⏱ Expired - ' + escapeHtml(data.paidExpired) + '</div>';
-    }
-    html += '</div>';
-    banner.innerHTML = html;
-    container.insertBefore(banner, container.firstChild);
-  }
   function renderPremiumCards(data) {
     const container = document.getElementById('premiumListContainer');
     if (!container) return;
@@ -2964,7 +2852,6 @@
       { key: 'sixwin', name_en: 'SixWin Premium', name_mm: 'SixWin ပရီမီယံ', icon: 'Logo/sixwin_logo.jpg', activeColor: '#dc2626' },
       { key: 'shwe', name_en: 'Shwe Premium', name_mm: 'Shwe ပရီမီယံ', icon: 'Logo/shwe_logo.jpg', activeColor: '#ea580c' }
     ];
-    // 🆕 v30: 3-State logic — paidActive (Bot) authoritative
     const hasPaidActive = isPaidActiveFromData(data);
     let activeCount = 0;
     platforms.forEach((p, i) => {
@@ -3003,12 +2890,113 @@
     const countStr = currentLang === 'mm' ? toMmNum(activeCount) + ' / ' + toMmNum(4) : activeCount + ' / 4';
     document.getElementById('activePremiumCount').textContent = countStr;
   }
+  function renderPaidPremiumBanner(data) {
+    const container = document.getElementById('premiumListContainer');
+    if (!container) return;
+    const existing = document.getElementById('paidPremiumBanner');
+    if (existing) existing.remove();
+    if (data.paidActive === undefined && !data.paidExpired && !data.paidUid) return;
+
+    const isActive = isPaidActiveFromData(data);
+
+    const theme = isActive ? {
+      bg: 'linear-gradient(135deg, rgba(34,197,94,0.10), rgba(16,185,129,0.06))',
+      border: 'rgba(34,197,94,0.35)',
+      iconBg: 'linear-gradient(135deg, #16a34a, #22c55e)',
+      accentColor: '#15803d',
+      badgeBg: 'rgba(34,197,94,0.15)',
+      dotColor: '#22c55e',
+      shadow: '0 4px 20px rgba(34,197,94,0.12)',
+    } : {
+      bg: 'linear-gradient(135deg, rgba(245,158,11,0.10), rgba(217,119,6,0.06))',
+      border: 'rgba(245,158,11,0.35)',
+      iconBg: 'linear-gradient(135deg, #d97706, #f59e0b)',
+      accentColor: '#b45309',
+      badgeBg: 'rgba(245,158,11,0.15)',
+      dotColor: '#f59e0b',
+      shadow: '0 4px 20px rgba(245,158,11,0.12)',
+    };
+
+    const statusText = isActive ? 'ACTIVE' : 'EXPIRED';
+    const subtitle = isActive ? 'All Premium Features Unlocked' : 'Membership Ended';
+    const timeIcon = isActive ? 'fa-clock' : 'fa-triangle-exclamation';
+    const timeLabel = isActive ? 'Expires' : 'Expired';
+
+    const banner = document.createElement('div');
+    banner.id = 'paidPremiumBanner';
+    banner.style.cssText = `
+      grid-column: 1 / -1;
+      padding: 16px 18px;
+      border-radius: 20px;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      background: ${theme.bg};
+      border: 1.5px solid ${theme.border};
+      box-shadow: ${theme.shadow};
+      position: relative;
+      overflow: hidden;
+    `;
+
+    const glow = document.createElement('div');
+    glow.style.cssText = `
+      position: absolute;
+      top: -30px; right: -30px;
+      width: 120px; height: 120px;
+      border-radius: 50%;
+      background: ${theme.dotColor};
+      opacity: 0.10;
+      filter: blur(28px);
+      pointer-events: none;
+    `;
+    banner.appendChild(glow);
+
+    let html = `
+      <div style="width: 46px; height: 46px; border-radius: 14px; background: ${theme.iconBg}; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 19px; flex-shrink: 0; box-shadow: 0 4px 12px ${theme.dotColor}40; position: relative; z-index: 1;">
+        <i class="fa-solid fa-crown"></i>
+      </div>
+      <div style="flex: 1; min-width: 0; position: relative; z-index: 1;">
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px; flex-wrap: wrap;">
+          <span style="width: 8px; height: 8px; border-radius: 50%; background: ${theme.dotColor}; box-shadow: 0 0 0 3px ${theme.dotColor}30; animation: paidDotPulse 2s ease-in-out infinite; flex-shrink: 0;"></span>
+          <span style="font-size: 0.6875rem; font-weight: 800; letter-spacing: 0.08em; color: ${theme.accentColor}; text-transform: uppercase;">
+            Paid Premium
+          </span>
+          <span style="font-size: 0.625rem; font-weight: 800; padding: 3px 9px; border-radius: 6px; background: ${theme.badgeBg}; color: ${theme.accentColor}; letter-spacing: 0.06em;">
+            ${statusText}
+          </span>
+        </div>
+        <div style="font-size: 0.875rem; font-weight: 800; color: ${theme.accentColor}; margin-bottom: 4px; line-height: 1.3;">
+          ${subtitle}
+        </div>`;
+
+    if (data.paidExpired) {
+      html += `
+        <div style="display: flex; align-items: center; gap: 6px; font-size: 0.6875rem; font-weight: 600; color: var(--text-muted);">
+          <i class="fa-solid ${timeIcon}" style="font-size: 10px; opacity: 0.8;"></i>
+          <span>${timeLabel}: ${escapeHtml(data.paidExpired)}</span>
+        </div>`;
+    }
+
+    html += `</div>`;
+
+    if (!isActive) {
+      html += `
+        <button onclick="window.open('https://t.me/SuperEaringWebbb_Bot', '_blank')" style="padding: 9px 14px; border-radius: 11px; background: linear-gradient(135deg, #d97706, #f59e0b); color: #fff; font-size: 0.75rem; font-weight: 800; border: none; cursor: pointer; display: flex; align-items: center; gap: 6px; flex-shrink: 0; box-shadow: 0 2px 10px rgba(217,119,6,0.3); position: relative; z-index: 1; font-family: inherit; letter-spacing: 0.02em;">
+          <i class="fa-solid fa-rotate-right" style="font-size: 10px;"></i>
+          Renew
+        </button>`;
+    }
+
+    banner.innerHTML = html;
+    container.insertBefore(banner, container.firstChild);
+  }
   function refreshProfileData() {
     const icon = document.querySelector('.refresh-btn i');
     if (icon) { icon.style.animation = 'none'; void icon.offsetWidth; icon.style.animation = 'themeSpin 0.6s linear'; setTimeout(() => icon.style.animation = '', 600); }
-    if (userDataCache) { renderPremiumCards(userDataCache); showToast(currentLang === 'mm' ? 'အခြေအနေ အသစ်ဖြစ်သွားပါပြီ' : 'Status Updated', 'info'); }
+    if (userDataCache) { renderPremiumCards(userDataCache); renderPaidPremiumBanner(userDataCache); showToast(currentLang === 'mm' ? 'အခြေအနေ အသစ်ဖြစ်သွားပါပြီ' : 'Status Updated', 'info'); }
   }
-  
+
   // ============ LOGOUT ============
   function showLogoutConfirm() { document.getElementById('logoutConfirmModal').classList.add('active'); }
   function closeLogoutConfirm() { document.getElementById('logoutConfirmModal').classList.remove('active'); }
@@ -3026,7 +3014,7 @@
     showLoginScreen(); updateHeader(); resetLoginForm();
     showToast(currentLang === 'mm' ? 'လော့အောက် လုပ်ပြီးပါပြီ' : 'Logged out successfully', 'success');
   }
-  
+
   // ============ OTP ============
   function moveOtp(current, index) {
     let v = current.value.replace(/\D/g, '');
@@ -3053,7 +3041,7 @@
     });
   });
   function getOtpCode() { let code = ''; document.querySelectorAll('.otp-box').forEach(box => code += box.value); return code; }
-  
+
   // ============ LOGIN FLOW ============
   function resetLoginForm() {
     document.getElementById('loginChatId').value = '';
@@ -3209,7 +3197,7 @@
     sendBusy = false; loginBusy = false;
     sendLoginCode();
   }
-  
+
   // ============ UTILS ============
   function showToast(msg, type = 'success', duration = 2200) {
     const container = document.getElementById('toastContainer');
@@ -3237,8 +3225,8 @@
   const style = document.createElement('style');
   style.textContent = '@keyframes themeSpin { 0% { transform: rotate(0deg) scale(1); } 50% { transform: rotate(180deg) scale(0.75); } 100% { transform: rotate(360deg) scale(1); } }';
   document.head.appendChild(style);
-  
-  // ============ PREDICTION DATA — FIXED Global Trx Free Path ============
+
+  // ============ PREDICTION DATA ============
   const PREDICTION_DATA = {
     ck: {
       name: 'Ck Lottery', logo: 'Logo/ck_logo.jpg', accessKeys: ['ck'],
@@ -3338,25 +3326,22 @@
             { ver: 'v1.2', path: 'Mini/Global_TrxMini/global_trx1mini1-2.html' },
             { ver: 'v1.3', path: 'Mini/Global_TrxMini/global_trx1mini1-3.html' }
           ],
-          // ✅ FIXED: globaltrx (no underscore) for free
           free: [{ ver: 'v1.1', path: 'Mini/Global_TrxMini/globaltrx1mini1-1-free.html' }]
         }
       }
     }
   };
-  
+
   let predictionState = null;
   const predictionLockedClicks = {};
   const PREDICTION_LOCK_THRESHOLD = 3;
-  
-  // ============ WIN RATE ALGORITHMS ============
+
   function classifyBS(num) {
     var n = parseInt(num, 10);
     if (isNaN(n)) return null;
     return n >= 5 ? 'BIG' : 'SMALL';
   }
-  
-  // V1.1 — Streak Reversal + Weighted Counter-Trend
+
   function v11Predict(history) {
     if (!history || history.length < 5) return null;
     var seq = history.slice(0, 8).map(r => classifyBS(r.number)).filter(Boolean);
@@ -3380,8 +3365,6 @@
     }
     return total > 0 ? Math.round(hits / total * 100) : null;
   }
-  
-  // V1.2 — Trend Following + Weighted Majority
   function v12Predict(history) {
     if (!history || history.length < 3) return null;
     var last3 = history.slice(0, 3).map(r => classifyBS(r.number)).filter(Boolean);
@@ -3410,8 +3393,6 @@
     if (total === 0) return null;
     return Math.round((correct / total) * 100);
   }
-  
-  // V1.3 — Pattern Detection (Mirror + Reverse)
   function v13Predict(history) {
     if (!history || history.length < 2) return null;
     var bsList = history.map(r => classifyBS(r.number)).filter(Boolean);
@@ -3432,8 +3413,6 @@
     if (total === 0) return null;
     return Math.round((correct / total) * 100);
   }
-  
-  // FREE — Trend Follow (matches mini HTML's free_trend_follow)
   function freeStrategyPredict(history) {
     if (!history || history.length < 2) return null;
     var recent = history.slice(0, Math.min(3, history.length));
@@ -3459,8 +3438,7 @@
     if (tot === 0) return null;
     return Math.round((ok / tot) * 100);
   }
-  
-  // ============ WIN RATE FETCH & CACHE ============
+
   async function fetchWinRateResults(platformKey, gameKey) {
     const path = PLATFORM_FIREBASE[platformKey] && PLATFORM_FIREBASE[platformKey][gameKey];
     if (!path) return null;
@@ -3482,7 +3460,7 @@
       return null;
     }
   }
-  
+
   async function prefetchAndUpdateWinRates(platformKey, gameKey) {
     const cacheKey = platformKey + '_' + gameKey;
     if (!winRateCache[cacheKey]) winRateCache[cacheKey] = { results: null, time: 0, rates: null };
@@ -3499,7 +3477,7 @@
       updateVersionWinRateDisplays();
     }
   }
-  
+
   function getWinRateForVersion(platformKey, gameKey, ver) {
     const cacheKey = platformKey + '_' + gameKey;
     const cached = winRateCache[cacheKey];
@@ -3515,13 +3493,11 @@
     if (!cached || !cached.rates) return null;
     return cached.rates.free;
   }
-  
+
   function updateVersionWinRateDisplays() {
     if (!predictionState) return;
     const platformKey = predictionState.platform;
     const gameKey = predictionState.activeGame;
-  
-    // Special versions
     document.querySelectorAll('.pred-version-btn[data-type="special"]').forEach(btn => {
       const ver = btn.getAttribute('data-ver');
       if (!ver) return;
@@ -3543,8 +3519,6 @@
         rateEl.textContent = fmt.replace('{p}', rate);
       }
     });
-  
-    // Free versions
     document.querySelectorAll('.pred-version-btn[data-type="free"]').forEach(btn => {
       const rateEl = btn.querySelector('.ver-winrate');
       if (!rateEl) return;
@@ -3565,8 +3539,7 @@
       }
     });
   }
-  
-  // ============ AUTO REFRESH (30s) ============
+
   function startWinRateAutoRefresh() {
     stopWinRateAutoRefresh();
     winRateRefreshInterval = setInterval(() => {
@@ -3582,8 +3555,7 @@
       winRateRefreshInterval = null;
     }
   }
-  
-  // ============ PREDICTION LIST ============
+
   function isPredictionUnlocked(platformKey) {
     const p = PREDICTION_DATA[platformKey];
     if (!p) return false;
@@ -3591,15 +3563,16 @@
     try {
       const data = userDataCache || JSON.parse(localStorage.getItem('webUserData') || '{}');
       const platforms = data.platforms || {};
+      const paidActive = isPaidActiveFromData(data);
       const paidUid = data.paidUid || null;
       for (const k of p.accessKeys) {
-        if (k === 'paid') { if (paidUid) return true; }
+        if (k === 'paid') { if (paidActive && paidUid) return true; }
         else if (platforms[k]) return true;
       }
       return false;
     } catch (e) { return false; }
   }
-  
+
   function renderPredictionList() {
     const container = document.getElementById('predictionList');
     if (!container) return;
@@ -3622,19 +3595,14 @@
     html += '</div>';
     container.innerHTML = html;
   }
-  
-  // ============ OPEN PLATFORM (Allow Guest) ============
+
   function openPredictionPlatform(platformKey) {
     const p = PREDICTION_DATA[platformKey];
     if (!p) return;
-  
-    // Block only if not in app at all (login screen)
     if (appState.mode === 'login') {
       showToast(T[currentLang].login_required || 'Please enter the app first.', 'warning', 3000);
       return;
     }
-  
-    // Guest & User both can enter. Free is accessible. Special is locked for guest.
     predictionLockedClicks[platformKey] = 0;
     if (currentSub) closeSub();
     hideExtensionForSubscreen();
@@ -3648,8 +3616,7 @@
     renderPredictionPlatformDetail();
     startWinRateAutoRefresh();
   }
-  
-  // ============ RENDER PLATFORM DETAIL ============
+
   function renderPredictionPlatformDetail() {
     if (!predictionState) return;
     const p = PREDICTION_DATA[predictionState.platform];
@@ -3676,8 +3643,7 @@
     subBody.scrollTop = 0;
     prefetchAndUpdateWinRates(predictionState.platform, predictionState.activeGame);
   }
-  
-  // ============ BUILD VERSION BUTTONS ============
+
   function buildVersionSectionsHtml(gameKey) {
     if (!predictionState) return '';
     const p = PREDICTION_DATA[predictionState.platform];
@@ -3686,8 +3652,6 @@
     if (!g) return '';
     const isPremium = predictionState.unlocked;
     let html = '';
-  
-    // Special Section
     if (g.special && g.special.length) {
       html += '<div class="pred-version-section"><div class="pred-version-label">Special</div><div class="pred-version-row-h">';
       g.special.forEach(v => {
@@ -3712,8 +3676,6 @@
       });
       html += '</div></div>';
     }
-  
-    // Free Section — with Win Rate
     if (g.free && g.free.length) {
       html += '<div class="pred-version-section"><div class="pred-version-label">Free</div><div class="pred-version-row-h">';
       g.free.forEach(v => {
@@ -3734,11 +3696,9 @@
       });
       html += '</div></div>';
     }
-  
     return html;
   }
-  
-  // ============ TAB SWITCH (Horizontal Slide) ============
+
   function switchPredGame(gKey) {
     if (!predictionState) return;
     const p = PREDICTION_DATA[predictionState.platform];
@@ -3769,8 +3729,7 @@
       prefetchAndUpdateWinRates(predictionState.platform, gKey);
     }, 240);
   }
-  
-  // ============ HANDLE VERSION CLICK ============
+
   function handlePredVersionClick(gameKey, verKey, type) {
     if (!predictionState) return;
     const p = PREDICTION_DATA[predictionState.platform];
@@ -3802,8 +3761,7 @@
     }
     openPredictionMini(gameKey, verKey, type);
   }
-  
-  // ============ OPEN MINI ============
+
   function openPredictionMini(gameKey, verKey, type) {
     if (!predictionState) return;
     const p = PREDICTION_DATA[predictionState.platform];
@@ -3831,7 +3789,7 @@
     subBody.appendChild(iframe);
     setTimeout(() => hideIframeLoading(loadingEl), 10000);
   }
-  
+
   function predictionGoBack() {
     if (!predictionState) return false;
     if (predictionState.ver) {
@@ -3844,7 +3802,7 @@
     return false;
   }
 
-  // 🆕 v29: Backup refresh on tab focus/visibility (in case listener temporarily lost)
+  // 🆕 v31: Auto-refresh on visibility/focus
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'visible' && appState.mode === 'user' && userDataCache && userDataCache.chatId) {
       if (appState.currentTab === 'profile') renderProfilePage();
@@ -3857,5 +3815,5 @@
   });
 
   </script>
-  </body>
-  </html>
+</body>
+</html>
