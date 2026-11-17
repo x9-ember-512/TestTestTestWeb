@@ -1950,10 +1950,6 @@
   function isPaidActiveFromData(data) {
     if (!data) return false;
     if (data.paidActive !== undefined && data.paidActive !== null) {
-      if (data.paidActive === false && data.paidExpiredTs && Date.now() < Number(data.paidExpiredTs)) {
-        console.warn('[Paid] paidActive=false but expTs is future → fallback ACTIVE');
-        return true;
-      }
       return data.paidActive === true;
     }
     if (!data.paidExpiredTs) return !!data.paidUid;
@@ -3802,16 +3798,28 @@
     return false;
   }
 
-  // 🆕 v31: Auto-refresh on visibility/focus
-  document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'visible' && appState.mode === 'user' && userDataCache && userDataCache.chatId) {
+  // 🆕 v32: Fresh read from Firebase on visibility/focus (mobile background safety net)
+  async function refreshPremiumFromFirebase() {
+    if (appState.mode !== 'user' || !userDataCache || !userDataCache.chatId || !loginBridgeDb) return;
+    try {
+      const snap = await loginBridgeDb.ref('user_premium/' + userDataCache.chatId).get();
+      const data = snap.val() || {};
+      const old = userDataCache || {};
+      userDataCache.platforms = data.platforms || {};
+      userDataCache.paidUid = data.paidUid || null;
+      userDataCache.paidActive = isPaidActiveFromData(data);
+      userDataCache.paidExpired = (data.paidExpired !== undefined) ? data.paidExpired : (old.paidExpired || null);
+      userDataCache.paidExpiredTs = (data.paidExpiredTs !== undefined) ? data.paidExpiredTs : (old.paidExpiredTs || null);
+      localStorage.setItem('webUserData', JSON.stringify(userDataCache));
       if (appState.currentTab === 'profile') renderProfilePage();
-    }
+      if (appState.currentTab === 'prediction') renderPredictionList();
+    } catch (e) { console.warn('[Premium] Fresh read failed:', e); }
+  }
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') refreshPremiumFromFirebase();
   });
   window.addEventListener('focus', () => {
-    if (appState.mode === 'user' && userDataCache && userDataCache.chatId) {
-      if (appState.currentTab === 'profile') renderProfilePage();
-    }
+    refreshPremiumFromFirebase();
   });
 
   </script>
